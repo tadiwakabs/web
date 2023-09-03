@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Countries - Geographical Statistics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="SQL.html" class="logo">Back to SQL Portfolio</a>
+					</header>
+
+				<!-- Nav -->
+                <nav id="nav">
+                    <ul class="links">
+                        <li><a href="index.html">Tableau Portfolio</a></li>
+                        <li class="active"><a href="SQL.html">SQL Portfolio</a></li>
+                        <li><a href="about-me.html">About Me</a></li>
+                </ul>
+                    <ul class="icons">
+                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+                </nav>
+
+				<!-- Main -->
+                <div id="main">
+
+                    <!-- Post -->
+                        <section class="post">
+                            <header class="major">
+                                <h1>Countries - Geographical Statistics<br />
+                            </header>
+
+                            <!-- Text stuff -->
+                                <pre><code>
+-- Countries and dependent territories, 2020
+Data adapted from
+http://www.worldometers.info/world-population/population-by-country/
+Does not include rows which had "N.A." values, so some territories are missing.
+
+CREATE TABLE countries(
+name                    TEXT PRIMARY KEY,
+population              INTEGER,
+percent_one_year_change REAL,
+population_change       INTEGER,
+density_per_sq_km       INTEGER,
+area_sq_km              INTEGER,
+net_migrants            INTEGER,
+fertility_rate          REAL,
+median_age              REAL,
+percent_of_world_pop    REAL
+);
+
+-- Which country has the largest population?
+SELECT name,MAX(Population) AS Population FROM countries;
+
+-- Which country has the smallest population?
+SELECT name,MIN(Population) AS Population FROM countries;
+
+-- What is the average population?
+SELECT ROUND(AVG(Population)) AS Average_Population FROM countries;
+
+-- What is the average fertility rate?
+SELECT AVG(fertility_rate) AS average_fertility_rate FROM countries;
+
+-- List the countries in order by increasing population density.
+SELECT name,(Population/area_sq_km)AS population_density FROM countries 
+GROUP BY population_density; 
+
+-- Which countries with a high population have a low migration rate?
+SELECT name,net_migrants,percent_of_world_pop FROM countries 
+GROUP BY net_migrants 
+HAVING percent_of_world_pop>1 AND net_migrants<100000;
+
+-- Display a list of how many countries have a ageing, working or booming population.
+SELECT COUNT(*),
+CASE
+    WHEN median_age>45 THEN"Ageing Population"
+    WHEN median_age>25 THEN "Working Population"
+    ELSE "Booming Population"
+END AS "population_type"
+FROM countries
+GROUP BY population_type;      </code></pre>
+                        </section>
+
+                            </div>
+        
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <section>
+                                <form method="post" action="#">
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" id="name" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="email">Email</label>
+                                            <input type="text" name="email" id="email" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="message">Message</label>
+                                            <textarea name="message" id="message" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Send Message" /></li>
+                                    </ul>
+                                </form>
+                            </section>
+                            <section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    Houston, TX</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    (832) 621-7429</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="#">tadiwakabayadondo@gmail.com</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                            </div>
+        
+                    </div>
+        
+                <!-- Scripts -->
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/jquery.scrollex.min.js"></script>
+                    <script src="assets/js/jquery.scrolly.min.js"></script>
+                    <script src="assets/js/browser.min.js"></script>
+                    <script src="assets/js/breakpoints.min.js"></script>
+                    <script src="assets/js/util.js"></script>
+                    <script src="assets/js/main.js"></script>
+        
+            </body>
+        </html>

@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Chinook Analytics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="SQL.html" class="logo">Back to SQL Portfolio</a>
+					</header>
+
+				<!-- Nav -->
+                <nav id="nav">
+                    <ul class="links">
+                        <li><a href="index.html">Tableau Portfolio</a></li>
+                        <li class="active"><a href="SQL.html">SQL Portfolio</a></li>
+                        <li><a href="about-me.html">About Me</a></li>
+                </ul>
+                    <ul class="icons">
+                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+                </nav>
+
+				<!-- Main -->
+                <div id="main">
+
+                    <!-- Post -->
+                        <section class="post">
+                            <header class="major">
+                                <h1>Chinook Analytics<br />
+                            </header>
+
+                            <!-- Text stuff -->
+                                <pre><code>
+--Show a list of customers who are not in the USA.
+SELECT FirstName, LastName, Country FROM customers
+WHERE country != "USA";
+
+--Find the Invoices of customers who are from Brazil.
+SELECT invoiceid, firstname, lastname, invoicedate FROM customers
+LEFT JOIN invoices
+ON invoices.CustomerId=customers.CustomerId
+WHERE country = "Brazil";
+
+--Show the Employees who are Sales Agents.
+SELECT firstname, Lastname, title FROM employees 
+WHERE Title LIKE "%Sales%" AND Title LIKE "%Agent%";
+
+--Find a unique/distinct list of billing countries from the Invoice table.
+SELECT DISTINCT BillingCountry FROM invoices;
+
+--Provide a query that shows the invoices associated with each sales agent. The resulting table should <br>include the Sales Agent's full name.
+SELECT employees.FirstName, employees.lastname, invoiceid FROM invoices
+LEFT JOIN customers 
+ON customers.CustomerId=invoices.CustomerId
+LEFT JOIN employees
+ON employees.employeeid=Customers.SupportRepId
+WHERE Title LIKE "%Sales%" AND Title LIKE "%Agent%"
+ORDER BY employees.FirstName;
+
+--Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+SELECT Employees.Firstname AS "Sales Agent FN", Employees.Lastname AS "Sales Agent LN", <br>customers.FirstName, customers.LastName, Country, Total FROM invoices
+LEFT JOIN customers
+ON customers.CustomerId=invoices.CustomerId
+LEFT JOIN employees
+ON employees.employeeid=Customers.SupportRepId
+WHERE Title LIKE "%Sales%" AND Title LIKE "%Agent%"
+ORDER BY customers.FirstName;
+
+--How many Invoices were there in 2009?
+SELECT COUNT(InvoiceID) AS "# of Invoices" FROM invoices
+WHERE invoicedate LIKE "%2009%";
+
+--What are the total sales for 2009?
+SELECT round(SUM(Total)) FROM invoices
+WHERE C;
+
+--Write a query that includes the purchased track name with each invoice line ID.
+SELECT name, invoiceid FROM tracks
+LEFT JOIN invoice_items
+ON invoice_items.trackid=tracks.TrackId
+WHERE invoiceid != "NULL";
+
+--Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT artists.name AS "Artist Name", tracks.name AS "Track Name", invoiceid FROM tracks
+LEFT JOIN invoice_items
+ON invoice_items.trackid=tracks.TrackId
+LEFT JOIN albums
+ON albums.AlbumId=tracks.AlbumId
+LEFT JOIN artists
+ON artists.ArtistId=albums.ArtistId
+WHERE invoiceid != "NULL";
+
+--Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+SELECT tracks.Name, Albums.Title, media_types.Name, genres.Name FROM tracks
+LEFT JOIN Albums
+ON Albums.AlbumId=Tracks.AlbumId
+LEFT JOIN Media_Types
+ON Media_Types.MediaTypeId=Tracks.MediaTypeId
+LEFT JOIN Genres
+ON Genres.GenreId=Tracks.GenreId
+ORDER BY albums.Title;
+
+--Show the total sales made by each sales agent.
+SELECT Employees.Firstname, Employees.Lastname, SUM(Total) AS "Total Sales" FROM invoices
+LEFT JOIN customers
+ON customers.CustomerId=invoices.CustomerId
+LEFT JOIN employees
+ON employees.employeeid=Customers.SupportRepId
+GROUP BY Employees.Firstname;
+
+--Which sales agent made the most dollars in sales in 2009?
+SELECT Employees.Firstname, Employees.Lastname, round(SUM(Total)) AS "Total Sales" FROM invoices
+LEFT JOIN customers
+ON customers.CustomerId=invoices.CustomerId
+LEFT JOIN employees
+ON employees.employeeid=Customers.SupportRepId
+WHERE invoicedate LIKE "%2009%"
+GROUP BY Employees.Firstname
+ORDER BY round(SUM(Total)) DESC
+LIMIT 1;                            </code></pre>
+                            </section>
+
+                            </div>
+        
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <section>
+                                <form method="post" action="#">
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" id="name" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="email">Email</label>
+                                            <input type="text" name="email" id="email" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="message">Message</label>
+                                            <textarea name="message" id="message" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Send Message" /></li>
+                                    </ul>
+                                </form>
+                            </section>
+                            <section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    Houston, TX</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    (832) 621-7429</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="#">tadiwakabayadondo@gmail.com</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                            </div>
+        
+                    </div>
+        
+                <!-- Scripts -->
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/jquery.scrollex.min.js"></script>
+                    <script src="assets/js/jquery.scrolly.min.js"></script>
+                    <script src="assets/js/browser.min.js"></script>
+                    <script src="assets/js/breakpoints.min.js"></script>
+                    <script src="assets/js/util.js"></script>
+                    <script src="assets/js/main.js"></script>
+        
+            </body>
+        </html>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Computer Store Database and Analytics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="SQL.html" class="logo">Back to SQL Portfolio</a>
+					</header>
+
+				<!-- Nav -->
+                <nav id="nav">
+                    <ul class="links">
+                        <li><a href="index.html">Tableau Portfolio</a></li>
+                        <li class="active"><a href="SQL.html">SQL Portfolio</a></li>
+                        <li><a href="about-me.html">About Me</a></li>
+                </ul>
+                    <ul class="icons">
+                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+                </nav>
+
+				<!-- Main -->
+                <div id="main">
+
+                    <!-- Post -->
+                        <section class="post">
+                            <header class="major">
+                                <h1>Computer Store Database and Analytics<br />
+                            </header>
+
+                            <!-- Text stuff -->
+                                <pre><code>
+--Create a tech store database (Macrocenter)
+CREATE TABLE macrocenter
+(id INTEGER PRIMARY KEY, item_name TEXT, price INTEGER, inventory INTEGER, item_type TEXT); 
+
+INSERT INTO macrocenter VALUES 
+(1,"TK150",50,40,"Graphics Card"),
+(2,"TK160",80,76,"Graphics Card"),
+(3,"TK170",120,92,"Graphics Card"),
+(4,"TK180",180,49,"Graphics Card"),
+(5,"TK190",300,17,"Graphics Card"),
+(6,"2400T",60,192,"Processor"),
+(7,"2600T",90,153,"Processor"),
+(8,"2800T",150,79,"Processor"),
+(9,"Dominance 16GB",40,211,"RAM"),
+(10,"Dominance 32GB",75,328,"RAM"),
+(11,"Dominance 64GB",140,136,"RAM"),
+(12,"TNY 1TB HDD",20,452,"Storage"),
+(13,"TNY 2TB HDD",35,621,"Storage"),
+(14,"TNY 2TB SSD",60,328,"Storage"),
+(15,"TNY 4TB SSD",115,210,"Storage");
+
+-- View whole database
+SELECT * FROM macrocenter;
+
+-- Sort all items in store by price lowest to highest
+SELECT * FROM macrocenter 
+ORDER BY price ASC;
+
+--Estimate total revenue based on current inventory
+SELECT SUM(price*inventory) FROM macrocenter;
+
+-- Show the top 5 most expensive items in the store
+SELECT item_name, price FROM macrocenter 
+ORDER BY price DESC 
+LIMIT 5;                        </code> </pre>                      
+                            </section>
+                            </div>
+        
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <section>
+                                <form method="post" action="#">
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" id="name" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="email">Email</label>
+                                            <input type="text" name="email" id="email" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="message">Message</label>
+                                            <textarea name="message" id="message" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Send Message" /></li>
+                                    </ul>
+                                </form>
+                            </section>
+                            <section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    Houston, TX</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    (832) 621-7429</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="#">tadiwakabayadondo@gmail.com</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                            </div>
+        
+                    </div>
+        
+                <!-- Scripts -->
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/jquery.scrollex.min.js"></script>
+                    <script src="assets/js/jquery.scrolly.min.js"></script>
+                    <script src="assets/js/browser.min.js"></script>
+                    <script src="assets/js/breakpoints.min.js"></script>
+                    <script src="assets/js/util.js"></script>
+                    <script src="assets/js/main.js"></script>
+        
+            </body>
+        </html>

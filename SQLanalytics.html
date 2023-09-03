@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Customer and Order Analytics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="SQL.html" class="logo">Back to SQL Portfolio</a>
+					</header>
+
+				<!-- Nav -->
+                <nav id="nav">
+                    <ul class="links">
+                        <li><a href="index.html">Tableau Portfolio</a></li>
+                        <li class="active"><a href="SQL.html">SQL Portfolio</a></li>
+                        <li><a href="about-me.html">About Me</a></li>
+                </ul>
+                    <ul class="icons">
+                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+                </nav>
+
+				<!-- Main -->
+                <div id="main">
+
+                    <!-- Post -->
+                        <section class="post">
+                            <header class="major">
+                                <h1>Customer and Order Analytics<br />
+                            </header>
+
+                            <!-- Text stuff -->
+                                <pre><code>
+--How many orders were placed in January?
+SELECT count(orderID) FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--How many of those orders were for an iPhone?
+SELECT count(orderID) FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+AND Product LIKE "iPhone";
+
+--Select the customer account numbers for all the orders that were placed in February.
+SELECT acctnum FROM BIT_DB.customers
+INNER JOIN BIT_DB.FebSales
+ON customers.order_id=FebSales.orderID
+WHERE length(orderID)=6
+AND orderID <> 'Order ID';
+
+--Which product was the cheapest one sold in January, and what was the price?
+SELECT DISTINCT Product FROM BIT_DB.JanSales
+ORDER BY price ASC
+LIMIT 1;
+
+--What is the total revenue for each product sold in January? 
+SELECT Product,ROUND(SUM(quantity)*price) AS Revenue FROM BIT_DB.JanSales
+GROUP BY Product;
+
+--Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+SELECT Product, Quantity, SUM(price*quantity) AS Revenue FROM BIT_DB.FebSales
+LEFT JOIN BIT_DB.customers
+ON FebSales.orderID=customers.order_id
+WHERE FebSales.location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY Product;
+
+--How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+SELECT COUNT(DISTINCT acctnum) AS Customer_Count, ROUND(AVG(Quantity*Price)) AS Average_Spending FROM BIT_DB.customers
+LEFT JOIN BIT_DB.FebSales
+ON FebSales.orderID=customers.order_id
+WHERE Quantity>2
+AND length(orderID) = 6 
+AND orderid <> 'Order ID';
+
+--List all the products sold in Los Angeles in February, and include how many of each were sold.
+SELECT Product, SUM(Quantity) FROM BIT_DB.FebSales
+WHERE Location LIKE '%Los Angeles%'
+GROUP BY Product;
+
+--Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
+SELECT DISTINCT location, COUNT(orderID) AS No_Orders FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%' 
+AND length(orderID) = 6 
+AND orderid <> 'Order ID'
+GROUP BY location
+HAVING COUNT(orderID)>2;
+
+--How many of each type of headphone were sold in February?
+SELECT Product, SUM(Quantity) FROM BIT_DB.FebSales
+WHERE Product LIKE '%Headphone%'
+GROUP BY Product;
+
+--What was the average amount spent per account in February? 
+SELECT AVG(Quantity*Price) AS Avg_Spending_Per_Account FROM BIT_DB.FebSales
+LEFT JOIN BIT_DB.customers
+ON FebSales.orderID=customers.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--What was the average quantity of products purchased per account in February?
+SELECT SUM(Quantity)/COUNT(acctnum) AS Avg_Product_Quantity FROM BIT_DB.FebSales
+LEFT JOIN BIT_DB.customers
+ON FebSales.orderID=customers.order_id
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+--Which product brought in the most revenue in January and how much revenue did it bring in total?
+SELECT Product, SUM(Quantity*Price) AS Revenue FROM BIT_DB.JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+GROUP BY Product
+ORDER BY Revenue DESC
+LIMIT 1;
+                            </code></pre>
+                            </section>
+
+                            </div>
+        
+                        <!-- Footer -->
+                        <footer id="footer">
+                            <section>
+                                <form method="post" action="#">
+                                    <div class="fields">
+                                        <div class="field">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" id="name" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="email">Email</label>
+                                            <input type="text" name="email" id="email" />
+                                        </div>
+                                        <div class="field">
+                                            <label for="message">Message</label>
+                                            <textarea name="message" id="message" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Send Message" /></li>
+                                    </ul>
+                                </form>
+                            </section>
+                            <section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    Houston, TX</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    (832) 621-7429</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="#">tadiwakabayadondo@gmail.com</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <li><a href="https://www.linkedin.com/in/tadiwa-kabayadondo/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                        <li><a href="https://github.com/tadiwakabs" target= "_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+                        <!-- Copyright -->
+                            <div id="copyright">
+                                <ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                            </div>
+        
+                    </div>
+        
+                <!-- Scripts -->
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/jquery.scrollex.min.js"></script>
+                    <script src="assets/js/jquery.scrolly.min.js"></script>
+                    <script src="assets/js/browser.min.js"></script>
+                    <script src="assets/js/breakpoints.min.js"></script>
+                    <script src="assets/js/util.js"></script>
+                    <script src="assets/js/main.js"></script>
+        
+            </body>
+        </html>
